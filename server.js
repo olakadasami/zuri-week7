@@ -7,7 +7,6 @@ const app = express()
 const PORT = 4000
 
 // connect to DB
-URI = 'mongodb+srv://sammy:12345678@sammy.eshcsdi.mongodb.net/Zuri';
 const mongoDb = 'mongodb://0.0.0.0:27017/zuri'
 const connectionParams = {
     useNewUrlParser: true,

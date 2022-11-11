@@ -1,3 +1,5 @@
+const Todo = require('../models/todo')
+
 // @desc to create a new todo
 // @method POST
 // @route '/'
@@ -11,9 +13,15 @@ const addTodo = async (req, res) => {
 // @method GET
 // @route '/'
 const allTodos = async (req, res) => {
-    res.json({
-        message: "All todoss"
-    })
+    try {
+        const todos = await Todo.findAll()
+
+        res.status(200).json({
+            todos
+        })
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching Todos" })
+    }
 }
 
 // @desc to Update a todo
