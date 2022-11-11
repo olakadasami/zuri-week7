@@ -4,9 +4,19 @@ const Todo = require('../models/todo')
 // @method POST
 // @route '/'
 const addTodo = async (req, res) => {
-    res.json({
-        message: "Todo Added"
-    })
+    const { title, description } = req.body
+    try {
+        if (!title || !description) {
+            return res.status(400).json({ message: "Title and description cant be empty" })
+        }
+        const todo = await Todo.create(req.body)
+        res.status(200).json({ todo })
+
+    } catch (err) {
+        res.status(400).json({
+            message: "Error occured while creating Todo"
+        })
+    }
 }
 
 // @desc retreive all todos
