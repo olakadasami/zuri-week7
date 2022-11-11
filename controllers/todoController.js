@@ -24,30 +24,27 @@ const addTodo = async (req, res) => {
 // @route '/'
 const allTodos = async (req, res) => {
     try {
-        const todos = await Todo.findAll()
+        const todos = await Todo.find()
 
-        res.status(200).json({
-            todos
-        })
+        res.status(200).json({ todos })
     } catch (err) {
-        res.status(500).json({ error: "Error fetching Todos" })
+        res.status(500).json({ error: err })
     }
 }
 
 // @desc to Update a todo
-// @method PUT
+// @method PATCH
 // @route '/'
 const updateTodo = async (req, res) => {
-    const id = req.params.id;
     try {
-        const todo = await Todo.findById(id)
+        const id = await req.params.id;
+        const todo = await Todo.findByIdAndUpdate(id, req.body)
         if (!todo) {
             return res.status(400).json({
                 message: "No todo with the Id"
             })
         }
-        todo = req.body
-        res.json({ todo })
+        res.status(200).json({ todo })
 
     } catch (err) {
         res.status(400).json({ error: err })
