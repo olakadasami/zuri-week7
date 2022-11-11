@@ -38,18 +38,39 @@ const allTodos = async (req, res) => {
 // @method PUT
 // @route '/'
 const updateTodo = async (req, res) => {
-    res.json({
-        message: "Todo Updated"
-    })
+    const id = req.params.id;
+    try {
+        const todo = await Todo.findById(id)
+        if (!todo) {
+            return res.status(400).json({
+                message: "No todo with the Id"
+            })
+        }
+        todo = req.body
+        res.json({ todo })
+
+    } catch (err) {
+        res.status(400).json({ error: err })
+    }
 }
 
 // @desc to create a new todo
 // @method DELETE
 // @route '/'
 const deleteTodo = async (req, res) => {
-    res.json({
-        message: "Todo Deleted"
-    })
+    const id = req.params.id;
+    try {
+        const todo = await Todo.findByIdAndDelete(id)
+        if (!todo) {
+            return res.status(400).json({
+                message: "No todo with the Id"
+            })
+        }
+        res.json({ todo })
+
+    } catch (err) {
+        res.status(400).json({ error: err })
+    }
 }
 
 module.exports = {
